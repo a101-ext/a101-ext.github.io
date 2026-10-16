@@ -7,22 +7,43 @@
     <meta name="description" content="The central hub for all A101 productivity extensions and tools.">
     <style>
         :root {
-            --primary: #0f172a;
-            --accent: #2563eb;
-            --bg: #f8fafc;
+            /* LIGHT MODE */
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-bg: #eff6ff;
+            --accent: #eab308;
+            --bg: #ffffff;
+            --bg-alt: #f8fafc;
             --card-bg: #ffffff;
-            --text-main: #334155;
+            --text-main: #1e293b;
             --text-muted: #64748b;
             --border: #e2e8f0;
         }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* DARK MODE */
+                --primary: #3b82f6;
+                --primary-hover: #60a5fa;
+                --primary-bg: rgba(59, 130, 246, 0.15);
+                --accent: #facc15;
+                --bg: #121826;
+                --bg-alt: #192132;
+                --card-bg: #1e2536;
+                --text-main: #f8fafc;
+                --text-muted: #94a3b8;
+                --border: #334155;
+            }
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg); color: var(--text-main); line-height: 1.6; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg); color: var(--text-main); line-height: 1.6; transition: background-color 0.3s, color 0.3s; }
         a { text-decoration: none; }
         
         /* Header */
-        header { background: var(--primary); color: white; padding: 4rem 5%; text-align: center; border-bottom: 4px solid var(--accent); }
+        header { background: var(--bg-alt); color: var(--text-main); padding: 4rem 5%; text-align: center; border-bottom: 4px solid var(--primary); transition: background-color 0.3s; }
         header h1 { font-size: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
-        header p { font-size: 1.1rem; color: #cbd5e1; max-width: 600px; margin: 0 auto; }
+        header p { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
 
         /* Main Content Grid */
         main { padding: 4rem 5%; max-width: 1000px; margin: 0 auto; min-height: 50vh; }
@@ -33,32 +54,35 @@
         .card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); }
         
         .card-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
-        .card-icon { width: 56px; height: 56px; background: #eff6ff; color: var(--accent); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .card-title h2 { font-size: 1.25rem; color: var(--primary); line-height: 1.2; }
-        .card-title span { display: inline-block; background: #e0e7ff; color: var(--accent); font-size: 0.75rem; padding: 2px 8px; border-radius: 12px; font-weight: 600; margin-top: 4px; }
+        .card-icon { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .card-icon img { width: 100%; height: 100%; border-radius: 12px; object-fit: cover; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        
+        .card-title h2 { font-size: 1.25rem; color: var(--text-main); line-height: 1.2; }
+        .card-title span { display: inline-block; background: var(--border); color: var(--text-main); font-size: 0.75rem; padding: 2px 8px; border-radius: 12px; font-weight: 600; margin-top: 4px; }
         
         .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; flex-grow: 1; }
         
         .card-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
         .btn { padding: 10px 16px; border-radius: 6px; font-weight: 600; font-size: 0.9rem; text-align: center; transition: background 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: 1; }
-        .btn-primary { background: var(--accent); color: white; border: 1px solid var(--accent); }
-        .btn-primary:hover { background: #1d4ed8; border-color: #1d4ed8; color: white; }
-        .btn-secondary { background: white; color: var(--text-main); border: 1px solid #cbd5e1; }
-        .btn-secondary:hover { background: #f1f5f9; color: var(--primary); }
+        .btn-primary { background: var(--primary); color: white; border: 1px solid var(--primary); }
+        .btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); color: white; }
+        .btn-secondary { background: transparent; color: var(--text-main); border: 1px solid var(--border); }
+        .btn-secondary:hover { background: var(--bg-alt); color: var(--primary); border-color: var(--primary); }
 
         /* Coming Soon Placeholder */
-        .card.placeholder { border: 2px dashed #cbd5e1; background: transparent; box-shadow: none; justify-content: center; align-items: center; text-align: center; color: var(--text-muted); min-height: 250px; }
-        .card.placeholder:hover { transform: none; box-shadow: none; border-color: var(--accent); }
+        .card.placeholder { border: 2px dashed var(--border); background: transparent; box-shadow: none; justify-content: center; align-items: center; text-align: center; color: var(--text-muted); min-height: 250px; }
+        .card.placeholder:hover { transform: none; box-shadow: none; border-color: var(--primary); }
 
         /* Footer */
         footer { padding: 2rem 5%; text-align: center; color: var(--text-muted); border-top: 1px solid var(--border); font-size: 0.9rem; margin-top: auto; }
-        footer a { color: var(--accent); }
+        footer a { color: var(--primary); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>A101 Extensions Portal</h1>
+        <h1>A<span style="color: var(--accent);">101</span> Extensions Portal</h1>
         <p>Your central hub for exploring productivity tools and browser extensions developed by the a101-ext project.</p>
     </header>
 
@@ -69,23 +93,23 @@
             <article class="card">
                 <div class="card-header">
                     <div class="card-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        <img src="https://raw.githubusercontent.com/a101-ext/Arabic101-Extension/main/Arabic101%20Chat%20%26%20Schedule/icon128.png" alt="Assistant Logo">
                     </div>
                     <div class="card-title">
-                        <h2>Arabic101 Assistant</h2>
+                        <h2>Arabic<span style="color: var(--accent);">101</span> Assistant</h2>
                         <span>v1.0.6</span>
                     </div>
                 </div>
                 <p>The ultimate browser extension for Arabic101 users. Seamlessly sync your timetable and actual classes directly to Google Calendar and communicate effortlessly with an optimized realtime chat widget.</p>
                 <div class="card-actions">
                     <a href="https://a101-ext.github.io/Arabic101-Extension/index.html" class="btn btn-secondary">Documentation</a>
-                    <a href="https://chromewebstore.google.com/detail/arabic101-assistant/gcjclacdblhiddeanmdnhliflgplbmcc" class="btn btn-primary" target="_blank">Chrome Web Store</a>
+                    <a href="https://chromewebstore.google.com/detail/arabic101-assistant/gcjclacdblhiddeanmdnhliflgplbmcc" class="btn btn-primary" target="_blank">Web Store</a>
                 </div>
             </article>
 
             <!-- Placeholder for Future Extensions -->
             <article class="card placeholder">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="2" style="margin-bottom: 12px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom: 12px; opacity: 0.5;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
                 <p>More productivity tools coming soon...</p>
             </article>
 
