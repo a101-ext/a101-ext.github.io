@@ -1,124 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A101 Extensions Portal</title>
-    <meta name="description" content="The central hub for all A101 educational extensions and tools.">
-    <style>
-        :root {
-            /* LIGHT MODE */
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --primary-bg: #eff6ff;
-            --accent: #eab308;
-            --bg: #ffffff;
-            --bg-alt: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-        }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A101 Extensions Portal</title>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; background: #151821; color: #f0f6fc; margin: 0; padding: 0; }
+    header { text-align: center; padding: 80px 20px 60px; border-bottom: 2px solid #3b82f6; }
+    h1 { font-size: 36px; margin: 0 0 16px; }
+    h1 span { color: #ffe600; }
+    .subtitle { color: #8b949e; font-size: 16px; max-width: 500px; margin: 0 auto; line-height: 1.5; }
+    
+    .grid { display: flex; justify-content: center; gap: 24px; padding: 60px 20px; flex-wrap: wrap; }
+    .card { background: #202534; border: 1px solid #2e3548; border-radius: 16px; padding: 24px; width: 100%; max-width: 400px; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    
+    .card-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+    .card-header img { width: 56px; height: 56px; border-radius: 12px; background: #151821; padding: 4px; border: 1px solid #2e3548; }
+    .card-title { font-size: 20px; font-weight: 700; margin: 0 0 4px; }
+    .badge { display: inline-block; background: #ef4444; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+    
+    .desc { color: #cbd5e1; font-size: 14px; line-height: 1.6; margin-bottom: 24px; flex: 1; }
+    
+    .btn-group { display: flex; gap: 10px; }
+    .btn { flex: 1; text-align: center; text-decoration: none; padding: 10px; border-radius: 8px; font-size: 14px; font-weight: 600; transition: background 0.2s; }
+    .btn-primary { background: #3b82f6; color: #fff; }
+    .btn-primary:hover { background: #2563eb; }
+    .btn-outline { background: transparent; color: #f8fafc; border: 1px solid #475569; }
+    .btn-outline:hover { background: #2e3548; }
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                /* DARK MODE */
-                --primary: #3b82f6;
-                --primary-hover: #60a5fa;
-                --primary-bg: rgba(59, 130, 246, 0.15);
-                --accent: #facc15;
-                --bg: #121826;
-                --bg-alt: #192132;
-                --card-bg: #1e2536;
-                --text-main: #f8fafc;
-                --text-muted: #94a3b8;
-                --border: #334155;
-            }
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg); color: var(--text-main); line-height: 1.6; transition: background-color 0.3s, color 0.3s; }
-        a { text-decoration: none; }
-        
-        /* Header */
-        header { background: var(--bg-alt); color: var(--text-main); padding: 4rem 5%; text-align: center; border-bottom: 4px solid var(--primary); transition: background-color 0.3s; }
-        header h1 { font-size: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
-        header p { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
-
-        /* Main Content Grid */
-        main { padding: 4rem 5%; max-width: 1000px; margin: 0 auto; min-height: 50vh; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
-
-        /* Extension Card */
-        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
-        .card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); }
-        
-        .card-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
-        .card-icon { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .card-icon img { width: 100%; height: 100%; border-radius: 12px; object-fit: cover; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
-        
-        .card-title h2 { font-size: 1.25rem; color: var(--text-main); line-height: 1.2; }
-        .card-title span { display: inline-block; background: var(--border); color: var(--text-main); font-size: 0.75rem; padding: 2px 8px; border-radius: 12px; font-weight: 600; margin-top: 4px; }
-        
-        .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; flex-grow: 1; }
-        
-        .card-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .btn { padding: 10px 16px; border-radius: 6px; font-weight: 600; font-size: 0.9rem; text-align: center; transition: background 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: 1; }
-        .btn-primary { background: var(--primary); color: white; border: 1px solid var(--primary); }
-        .btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); color: white; }
-        .btn-secondary { background: transparent; color: var(--text-main); border: 1px solid var(--border); }
-        .btn-secondary:hover { background: var(--bg-alt); color: var(--primary); border-color: var(--primary); }
-
-        /* Coming Soon Placeholder */
-        .card.placeholder { border: 2px dashed var(--border); background: transparent; box-shadow: none; justify-content: center; align-items: center; text-align: center; color: var(--text-muted); min-height: 250px; }
-        .card.placeholder:hover { transform: none; box-shadow: none; border-color: var(--primary); }
-
-        /* Footer */
-        footer { padding: 2rem 5%; text-align: center; color: var(--text-muted); border-top: 1px solid var(--border); font-size: 0.9rem; margin-top: auto; }
-        footer a { color: var(--primary); text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
-    </style>
+    .placeholder-card { border: 2px dashed #2e3548; background: transparent; align-items: center; justify-content: center; text-align: center; color: #64748b; font-size: 14px; }
+  </style>
 </head>
 <body>
 
-    <header>
-        <h1>A<span style="color: var(--accent);">101</span> Extensions Portal</h1>
-        <p>Your central hub for exploring educational tools and browser extensions developed by the a101-ext project.</p>
-    </header>
+  <header>
+    <h1><span>A101</span> Extensions Portal</h1>
+    <p class="subtitle">Your central hub for exploring educational tools and browser extensions developed by the a101-ext project.</p>
+  </header>
 
-    <main>
-        <div class="grid">
-            
-            <!-- Arabic101 Assistant Card -->
-            <article class="card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <img src="https://raw.githubusercontent.com/a101-ext/Arabic101-Extension/main/Arabic101%20Chat%20%26%20Schedule/icon128.png" alt="Assistant Logo">
-                    </div>
-                    <div class="card-title">
-                        <h2>Arabic<span style="color: var(--accent);">101</span> Assistant</h2>
-                        <span>v1.0.7.1</span>
-                    </div>
-                </div>
-                <p>The all-in-one browser companion for Arabic101 teachers and students. Access a complete popup &amp; standalone dashboard, receive proactive class and chat desktop alerts, sync schedules to Google Calendar or ICS, and chat in real time.</p>
-                <div class="card-actions">
-                    <a href="https://a101-ext.github.io/Arabic101-Extension/index.html" class="btn btn-secondary">Documentation</a>
-                    <a href="https://chromewebstore.google.com/detail/arabic101-assistant/gcjclacdblhiddeanmdnhliflgplbmcc" class="btn btn-primary" target="_blank">Web Store</a>
-                </div>
-            </article>
-
-            <!-- Placeholder for Future Extensions -->
-            <article class="card placeholder">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom: 12px; opacity: 0.5;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-                <p>More educational tools coming soon...</p>
-            </article>
-
+  <div class="grid">
+    <!-- Extension 1: Arabic101 Assistant -->
+    <div class="card">
+      <div class="card-header">
+        <img src="https://a101-ext.github.io/Arabic101-Extension/icon48.png" alt="Icon">
+        <div>
+          <h2 class="card-title" data-a101-name>Arabic101 Assistant</h2>
+          <span class="badge" data-a101-version>v1.1.0.0</span>
         </div>
-    </main>
+      </div>
+      <p class="desc" data-a101-desc>The all-in-one browser companion for Arabic101 teachers and students. Access a complete popup & standalone dashboard, receive proactive class and chat desktop alerts, sync schedules to Google Calendar or ICS, and chat in real time.</p>
+      <div class="btn-group">
+        <a href="https://a101-ext.github.io/Arabic101-Extension/" class="btn btn-outline">Documentation</a>
+        <a href="#" class="btn btn-primary" onclick="alert('Coming soon to Chrome Web Store!'); return false;">Web Store</a>
+      </div>
+    </div>
 
-    <footer>
-        <p>&copy; 2026 a101-ext Developer Project. Check out our open-source repositories on <a href="https://github.com/a101-ext" target="_blank">GitHub</a>.</p>
-    </footer>
-<script src="./version-loader.js" defer></script>
+    <!-- Placeholder for Future Extensions -->
+    <div class="card placeholder-card">
+      <div style="font-size: 24px; margin-bottom: 8px;">+</div>
+      More educational tools coming soon...
+    </div>
+  </div>
+
+  <!-- Panggil version-loader.js menggunakan URL Absolut (karena berbeda repositori) -->
+  <script src="https://a101-ext.github.io/Arabic101-Extension/version-loader.js" defer></script>
 </body>
 </html>
